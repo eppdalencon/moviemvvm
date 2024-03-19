@@ -21,8 +21,19 @@ class ListViewController: UIViewController {
 private extension ListViewController {
     
     private func setup() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "MovieDB"
+        
+        let vw = MovieDetailsView()
+        
+        vw.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.view.addSubview(vw)
+        
+        NSLayoutConstraint.activate([
+            vw.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            vw.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            
+        ])
+        
         self.view.backgroundColor = .white
         
     }
