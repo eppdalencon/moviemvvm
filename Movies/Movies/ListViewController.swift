@@ -11,7 +11,6 @@ class ListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("build")
         setup()
        
     }
@@ -25,6 +24,7 @@ private extension ListViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "MovieDB"
         self.view.backgroundColor = .white
-        }
+        
+    }
     
 }
