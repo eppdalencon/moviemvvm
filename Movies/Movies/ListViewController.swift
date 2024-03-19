@@ -73,7 +73,8 @@ private extension ListViewController {
         NSLayoutConstraint.activate([
             cv.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8),
             cv.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8),
-            cv.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -8)
+            cv.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -8),
+            cv.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
         
     }
