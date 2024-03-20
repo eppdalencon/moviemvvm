@@ -18,7 +18,7 @@ class MovieDetailsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var nameLbl: UILabel = {
+    private lazy var overview: UILabel = {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -26,15 +26,15 @@ class MovieDetailsView: UIView {
         return lbl
     }()
     
-    private lazy var emailLbl: UILabel = {
+    private lazy var overviewLabel: UILabel = {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "Steak.com"
+        lbl.text = "Overview"
         return lbl
     }()
     
-    private lazy var third: UILabel = {
+    private lazy var imageCover: UILabel = { //vira um image
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +42,7 @@ class MovieDetailsView: UIView {
         return lbl
     }()
     
-    private lazy var foo: UILabel = {
+    private lazy var title: UILabel = {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -50,13 +50,30 @@ class MovieDetailsView: UIView {
         return lbl
     }()
     
+    private lazy var genres: UILabel = {
+        
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.text = "algo,outra coisa"
+        return lbl
+    }()
+    
+    private lazy var vote_average: UILabel = {
+        
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.text = "rating"
+        return lbl
+    }()
 
     private lazy var stackViewVertical: UIStackView = {
         let vw = UIStackView()
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.axis = .vertical
-        vw.backgroundColor = .blue
+        vw.backgroundColor = .cyan
         vw.spacing = 8
+        vw.alignment = .fill
+        vw.distribution = .fillEqually
         return vw
     }()
     
@@ -64,13 +81,23 @@ class MovieDetailsView: UIView {
         let vw = UIStackView()
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.axis = .horizontal
-        vw.alignment = .leading
-        vw.backgroundColor = .red
+        vw.alignment = .fill
         vw.distribution = .fillEqually
+        vw.backgroundColor = .red
         vw.spacing = 8
         return vw
     }()
     
+    private lazy var stackViewVerticalInner: UIStackView = {
+        let vw = UIStackView()
+        vw.translatesAutoresizingMaskIntoConstraints = false
+        vw.axis = .vertical
+        vw.backgroundColor = .green
+        vw.spacing = 8
+        vw.alignment = .fill
+        vw.distribution = .fillEqually
+        return vw
+    }()
     
     
 }
@@ -78,29 +105,31 @@ class MovieDetailsView: UIView {
 private extension MovieDetailsView{
     
     func setup(){
-        
         print("cheguei aqui")
         
+        stackViewVerticalInner.addArrangedSubview(title)
+        stackViewVerticalInner.addArrangedSubview(genres)
+        stackViewVerticalInner.addArrangedSubview(vote_average)
+
+        stackViewHorizontal.addArrangedSubview(imageCover)
+        stackViewHorizontal.addArrangedSubview(stackViewVerticalInner)
+        
+
+        stackViewVertical.addArrangedSubview(stackViewHorizontal)
+        stackViewVertical.addArrangedSubview(overviewLabel)
+        stackViewVertical.addArrangedSubview(overview)
+        
         self.addSubview(stackViewVertical)
-        
-        stackViewVertical.addArrangedSubview(emailLbl)
-        stackViewVertical.addArrangedSubview(nameLbl)
-        
-        stackViewVertical.addSubview(stackViewHorizontal)
-        
-        stackViewHorizontal.addArrangedSubview(third)
-        stackViewHorizontal.addArrangedSubview(foo)
-        
         
         NSLayoutConstraint.activate([
             stackViewVertical.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
             stackViewVertical.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 15),
             stackViewVertical.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -80),
             stackViewVertical.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -80),
-            stackViewHorizontal.topAnchor.constraint(equalTo: stackViewVertical.topAnchor),
-            stackViewHorizontal.bottomAnchor.constraint(equalTo: stackViewVertical.bottomAnchor),
-            stackViewHorizontal.trailingAnchor.constraint(equalTo: stackViewVertical.trailingAnchor, constant: 150),
-            stackViewHorizontal.leadingAnchor.constraint(equalTo: stackViewVertical.leadingAnchor, constant: 150)
+//            stackViewHorizontal.topAnchor.constraint(equalTo: stackViewVertical.topAnchor),
+//            stackViewHorizontal.bottomAnchor.constraint(equalTo: stackViewVertical.bottomAnchor),
+//            stackViewHorizontal.trailingAnchor.constraint(equalTo: stackViewVertical.trailingAnchor),
+//            stackViewHorizontal.leadingAnchor.constraint(equalTo: stackViewVertical.leadingAnchor)
             ])
     }
     
