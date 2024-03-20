@@ -22,7 +22,7 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "Steak"
+        lbl.text = "BLABLABLA"
         return lbl
     }()
     
@@ -38,7 +38,7 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "aaaaaaaaaa"
+        lbl.text = "imagem"
         return lbl
     }()
     
@@ -46,7 +46,7 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "bbbbbbbb"
+        lbl.text = "Rei leao"
         return lbl
     }()
     
@@ -62,9 +62,19 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "rating"
+        lbl.text = "7.1"
+        
         return lbl
     }()
+    
+    private var star: UIImageView{
+        let image = UIImageView(image: UIImage(systemName: "star")!)
+        image.tintColor = .yellow
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.widthAnchor.constraint(equalToConstant: 1).isActive = true
+        image.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        return image
+    }
 
     private lazy var stackViewVertical: UIStackView = {
         let vw = UIStackView()
@@ -99,6 +109,16 @@ class MovieDetailsView: UIView {
         return vw
     }()
     
+    private lazy var stackViewHorizontalInner: UIStackView = {
+        let vw = UIStackView()
+        vw.translatesAutoresizingMaskIntoConstraints = false
+        vw.axis = .horizontal
+        vw.alignment = .fill
+        vw.distribution = .fillEqually
+        vw.backgroundColor = .purple
+        vw.spacing = 8
+        return vw
+    }()
     
 }
 
@@ -107,9 +127,12 @@ private extension MovieDetailsView{
     func setup(){
         print("cheguei aqui")
         
+        stackViewHorizontalInner.addArrangedSubview(star)
+        stackViewHorizontalInner.addArrangedSubview(vote_average)
+        
         stackViewVerticalInner.addArrangedSubview(title)
         stackViewVerticalInner.addArrangedSubview(genres)
-        stackViewVerticalInner.addArrangedSubview(vote_average)
+        stackViewVerticalInner.addArrangedSubview(stackViewHorizontalInner)
 
         stackViewHorizontal.addArrangedSubview(imageCover)
         stackViewHorizontal.addArrangedSubview(stackViewVerticalInner)
@@ -122,14 +145,13 @@ private extension MovieDetailsView{
         self.addSubview(stackViewVertical)
         
         NSLayoutConstraint.activate([
-            stackViewVertical.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
-            stackViewVertical.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 15),
-            stackViewVertical.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -80),
-            stackViewVertical.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -80),
-//            stackViewHorizontal.topAnchor.constraint(equalTo: stackViewVertical.topAnchor),
-//            stackViewHorizontal.bottomAnchor.constraint(equalTo: stackViewVertical.bottomAnchor),
-//            stackViewHorizontal.trailingAnchor.constraint(equalTo: stackViewVertical.trailingAnchor),
-//            stackViewHorizontal.leadingAnchor.constraint(equalTo: stackViewVertical.leadingAnchor)
+            stackViewVertical.topAnchor.constraint(equalTo: self.topAnchor, constant: 100),
+            stackViewVertical.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            stackViewVertical.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            stackViewVertical.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            stackViewHorizontal.trailingAnchor.constraint(equalTo: stackViewVertical.trailingAnchor),
+            stackViewHorizontal.leadingAnchor.constraint(equalTo: stackViewVertical.leadingAnchor),
+            overviewLabel.topAnchor.constraint(equalTo: stackViewHorizontal.bottomAnchor)
             ])
     }
     

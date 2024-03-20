@@ -29,8 +29,10 @@ private extension ListViewController {
         self.view.addSubview(vw)
         
         NSLayoutConstraint.activate([
-            vw.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            vw.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            vw.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            vw.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
+            vw.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            vw.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             
         ])
         
