@@ -33,11 +33,29 @@ class MovieDetailsView: UIView {
         lbl.text = "Steak.com"
         return lbl
     }()
+    
+    private lazy var third: UILabel = {
+        
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.text = "aaaaaaaaaa"
+        return lbl
+    }()
+    
+    private lazy var foo: UILabel = {
+        
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.text = "bbbbbbbb"
+        return lbl
+    }()
+    
 
     private lazy var stackViewVertical: UIStackView = {
         let vw = UIStackView()
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.axis = .vertical
+        vw.backgroundColor = .blue
         vw.spacing = 8
         return vw
     }()
@@ -46,6 +64,9 @@ class MovieDetailsView: UIView {
         let vw = UIStackView()
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.axis = .horizontal
+        vw.alignment = .leading
+        vw.backgroundColor = .red
+        vw.distribution = .fillEqually
         vw.spacing = 8
         return vw
     }()
@@ -60,22 +81,26 @@ private extension MovieDetailsView{
         
         print("cheguei aqui")
         
-        stackViewHorizontal.addArrangedSubview(emailLbl)
-        
+        self.addSubview(stackViewVertical)
         
         stackViewVertical.addArrangedSubview(emailLbl)
         stackViewVertical.addArrangedSubview(nameLbl)
         
         stackViewVertical.addSubview(stackViewHorizontal)
         
-        self.addSubview(stackViewVertical)
+        stackViewHorizontal.addArrangedSubview(third)
+        stackViewHorizontal.addArrangedSubview(foo)
         
         
         NSLayoutConstraint.activate([
-            stackViewVertical.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            stackViewVertical.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            stackViewHorizontal.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            stackViewHorizontal.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            stackViewVertical.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+            stackViewVertical.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 15),
+            stackViewVertical.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -80),
+            stackViewVertical.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -80),
+            stackViewHorizontal.topAnchor.constraint(equalTo: stackViewVertical.topAnchor),
+            stackViewHorizontal.bottomAnchor.constraint(equalTo: stackViewVertical.bottomAnchor),
+            stackViewHorizontal.trailingAnchor.constraint(equalTo: stackViewVertical.trailingAnchor, constant: 150),
+            stackViewHorizontal.leadingAnchor.constraint(equalTo: stackViewVertical.leadingAnchor, constant: 150)
             ])
     }
     
