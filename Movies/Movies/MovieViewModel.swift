@@ -37,21 +37,23 @@ class MovieViewModel{
         }
     }
     
-    func getImages(url: String) {
+    func getImages(url: String, completion: @escaping () -> Void) {
         MovieService.getImage(urlString: url) { image, urlString in
             
             guard let movieIndex = self.nowPlaying.firstIndex(where: { $0.poster_path == urlString }) else { return }
             self.nowPlaying[movieIndex].imageCover = image
             
+            completion()
         }
+       
     }
     
-    func getImagesPopular(url: String) {
+    func getImagesPopular(url: String, completion: @escaping () -> Void) {
         MovieService.getImage(urlString: url) { image, urlString in
             
             guard let movieIndex = self.popular.firstIndex(where: { $0.poster_path == urlString }) else { return }
             self.popular[movieIndex].imageCover = image
-            
+            completion()
         }
     }
 }

@@ -107,10 +107,12 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
     
                 cell.vw!.imageView.image = UIImage(data: imagedata)
             } else {
-                vm.getImages(url: item.poster_path)
-                DispatchQueue.main.async {
-                    self.cv.reloadData()
+                vm.getImages(url: item.poster_path){
+                    DispatchQueue.main.async {
+                        self.cv.reloadData()
+                    }
                 }
+                
             
             }
             
@@ -126,10 +128,12 @@ extension ListViewController: UITableViewDataSource, UITableViewDelegate {
             if let imagedata = item.imageCover{
                 cell.vw!.imageView.image = UIImage(data: imagedata)
             } else {
-                vm.getImagesPopular(url: item.poster_path)
-                DispatchQueue.main.async {
-                    self.cv.reloadData()
+                vm.getImagesPopular(url: item.poster_path){
+                    DispatchQueue.main.async {
+                        self.cv.reloadData()
+                    }
                 }
+                
             
             }
             
@@ -174,7 +178,7 @@ private extension ListViewController {
         self.navigationItem.title = "Movies"
         self.navigationItem.searchController = search
        
-        search.searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 24)
+        
        
                
         self.view.backgroundColor = .white
