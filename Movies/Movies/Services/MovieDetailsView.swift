@@ -48,6 +48,7 @@ class MovieDetailsView: UIView {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.text = "Rei leao"
+        lbl.font = .systemFont(ofSize: 22, weight: .bold)
         return lbl
     }()
     
@@ -141,8 +142,9 @@ private extension MovieDetailsView{
         stackViewVerticalInner.addArrangedSubview(stackViewHorizontalInner)
         
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: stackViewVerticalInner.topAnchor),
-            stackViewHorizontalInner.leadingAnchor.constraint(equalTo: stackViewVerticalInner.leadingAnchor),
+            title.topAnchor.constraint(equalTo: stackViewVerticalInner.topAnchor, constant: 80),
+            title.leadingAnchor.constraint(equalTo: stackViewVerticalInner.leadingAnchor, constant: 16),
+            stackViewHorizontalInner.leadingAnchor.constraint(equalTo: stackViewVerticalInner.leadingAnchor, constant: 16),
             stackViewHorizontalInner.bottomAnchor.constraint(equalTo: stackViewVerticalInner.bottomAnchor),
             stackViewHorizontalInner.topAnchor.constraint(equalTo: stackViewVerticalInner.topAnchor, constant: 200),
             stackViewVerticalInner.trailingAnchor.constraint(equalTo: stackViewVerticalInner.trailingAnchor, constant: 200)
@@ -160,7 +162,7 @@ private extension MovieDetailsView{
         stackViewHorizontal.addArrangedSubview(stackViewVerticalInner)
         
         NSLayoutConstraint.activate([
-            //stackViewVerticalInner.leadingAnchor.constraint(equalTo: stackViewHorizontal.leadingAnchor),
+            stackViewVerticalInner.leadingAnchor.constraint(equalTo: stackViewVerticalInner.trailingAnchor),
             stackViewVerticalInner.topAnchor.constraint(equalTo: stackViewHorizontal.topAnchor),
             stackViewVerticalInner.bottomAnchor.constraint(equalTo: stackViewHorizontal.bottomAnchor),
             stackViewVerticalInner.trailingAnchor.constraint(equalTo: stackViewHorizontal.trailingAnchor),
@@ -180,7 +182,7 @@ private extension MovieDetailsView{
             stackViewVertical.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackViewHorizontal.trailingAnchor.constraint(equalTo: stackViewVertical.trailingAnchor),
             stackViewHorizontal.leadingAnchor.constraint(equalTo: stackViewVertical.leadingAnchor),
-            overviewLabel.topAnchor.constraint(equalTo: stackViewHorizontal.bottomAnchor),
+            overviewLabel.topAnchor.constraint(equalTo: overviewLabel.topAnchor, constant: 200),
             stackViewHorizontalInner.topAnchor.constraint(equalTo: stackViewHorizontalInner.topAnchor, constant:  16),
             
 //            star.topAnchor.constraint(equalTo: topAnchor),
