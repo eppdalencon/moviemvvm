@@ -22,7 +22,11 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "BLABLABLA"
+        lbl.text = "BLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLA"
+        lbl.backgroundColor = .white
+        lbl.lineBreakStrategy = .pushOut
+        lbl.numberOfLines = 0
+        lbl.setContentHuggingPriority(.defaultLow, for: .vertical)
         return lbl
     }()
     
@@ -32,8 +36,22 @@ class MovieDetailsView: UIView {
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.text = String("Overview")
         lbl.font = .systemFont(ofSize: 20, weight: .bold)
+        lbl.backgroundColor = .white
+        
         return lbl
     }()
+    
+    private lazy var overviewAux: UILabel = {
+        let lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.text = String("aux")
+        lbl.textColor = .white
+        lbl.font = .systemFont(ofSize: 1)
+        lbl.backgroundColor = .white
+        lbl.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        return lbl
+    }()
+    
     
     private lazy var imageCover: UILabel = { //vira um image
         
@@ -56,7 +74,8 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "algo,outra coisa"
+        lbl.text = "algo,outra coisa coisa coisacoisacoisacoisacoisacoisacoisa"
+        lbl.numberOfLines = 2
         return lbl
     }()
     
@@ -65,17 +84,17 @@ class MovieDetailsView: UIView {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.text = "7.1"
-        lbl.backgroundColor = .darkGray
+        lbl.backgroundColor = .white
         
         return lbl
     }()
     
     private var star: UIImageView{
         let image = UIImageView(image: UIImage(systemName: "star")!)
-        image.tintColor = .yellow
+        image.tintColor = .gray
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
-        image.backgroundColor = .gray
+        image.backgroundColor = .white
         image.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 //        image.widthAnchor.constraint(equalToConstant: 3).isActive = true
 //        image.heightAnchor.constraint(equalToConstant: 3).isActive = true
@@ -86,10 +105,10 @@ class MovieDetailsView: UIView {
         let vw = UIStackView()
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.axis = .vertical
-        vw.backgroundColor = .cyan
+        vw.backgroundColor = .white
         vw.spacing = 8
         vw.alignment = .fill
-        vw.distribution = .fillEqually
+        vw.distribution = .fillProportionally
         return vw
     }()
     
@@ -99,7 +118,7 @@ class MovieDetailsView: UIView {
         vw.axis = .horizontal
         vw.alignment = .fill
         vw.distribution = .fillEqually
-        vw.backgroundColor = .red
+        vw.backgroundColor = .white
         vw.spacing = 8
         return vw
     }()
@@ -108,7 +127,7 @@ class MovieDetailsView: UIView {
         let vw = UIStackView()
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.axis = .vertical
-        vw.backgroundColor = .green
+        vw.backgroundColor = .white
         vw.spacing = 8
         vw.alignment = .fill
         vw.distribution = .fillEqually
@@ -121,7 +140,7 @@ class MovieDetailsView: UIView {
         vw.axis = .horizontal
         vw.alignment = .leading
         vw.distribution = .fill
-        vw.backgroundColor = .purple
+        vw.backgroundColor = .white
         vw.spacing = 8
         
         return vw
@@ -132,8 +151,6 @@ class MovieDetailsView: UIView {
 private extension MovieDetailsView{
     
     func setup(){
-        print("cheguei aqui")
-        
         stackViewHorizontalInner.addArrangedSubview(star)
         stackViewHorizontalInner.addArrangedSubview(vote_average)
         
@@ -172,6 +189,7 @@ private extension MovieDetailsView{
         stackViewVertical.addArrangedSubview(stackViewHorizontal)
         stackViewVertical.addArrangedSubview(overviewLabel)
         stackViewVertical.addArrangedSubview(overview)
+        stackViewVertical.addArrangedSubview(overviewAux)
         
         self.addSubview(stackViewVertical)
         
@@ -182,7 +200,7 @@ private extension MovieDetailsView{
             stackViewVertical.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackViewHorizontal.trailingAnchor.constraint(equalTo: stackViewVertical.trailingAnchor),
             stackViewHorizontal.leadingAnchor.constraint(equalTo: stackViewVertical.leadingAnchor),
-            overviewLabel.topAnchor.constraint(equalTo: overviewLabel.topAnchor, constant: 200),
+            //overview.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor, constant: 10),
             stackViewHorizontalInner.topAnchor.constraint(equalTo: stackViewHorizontalInner.topAnchor, constant:  16),
             
 //            star.topAnchor.constraint(equalTo: topAnchor),
@@ -191,5 +209,4 @@ private extension MovieDetailsView{
         
         ])
     }
-    
 }
