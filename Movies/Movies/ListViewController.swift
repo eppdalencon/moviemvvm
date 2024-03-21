@@ -6,10 +6,13 @@
 //
 
 import UIKit
-
+import SafariServices
 
 
 class ListViewController: UIViewController {
+    
+    private let vm = MovieViewModel()
+    private var search = UISearchController(searchResultsController: nil)
     
     private var movies : [Movie] = [
         Movie(id: 1, title: "Inception", overview: "A thief who enters the dreams of others to steal secrets from their subconscious.", vote_average: 8.8, poster_path: "inception_poster.jpg", imageCover: nil),
@@ -20,15 +23,19 @@ class ListViewController: UIViewController {
     ]
 
     
-    private lazy var cv: UICollectionView = {
+    private lazy var cv: UITableView = {
         
-        print("criando")
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: UIScreen.main.bounds.width, height: 130)
+      
+       
         
-        let vw = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        vw.register(MovieCollectionViewCell.self, forCellWithReuseIdentifier: "MovieCollectionViewCell")
+        let vw = UITableView(frame: .zero, style: .plain)
+        
+   
+        vw.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieTableViewCell")
+//        vw.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.identifier)
+        vw.delegate = self
         vw.dataSource = self
+        vw.separatorStyle = .none
         vw.translatesAutoresizingMaskIntoConstraints = false
         return vw
         
@@ -36,25 +43,124 @@ class ListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        vm.delegate = self
+        vm.getMovies()
+        vm.getMoviesPopular()
         setup()
        
     }
 
 }
 
-extension ListViewController: UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.movies.count
+extension ListViewController: UITableViewDataSource, UITableViewDelegate {
+    
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        self.vm.nowPlaying.count
+//    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let currentSection = self.vm.sections[section]
+        
+        switch currentSection {
+            case .nowPlaying:
+            return self.vm.nowPlaying.count
+            case .popular:
+                return self.vm.popular.count
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("caiu")
-        let item = self.movies[indexPath.item]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCollectionViewCell", for: indexPath) as! MovieCollectionViewCell
-     
-        cell.item = item
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.vm.sections[section].value
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let header = view as? UITableViewHeaderFooterView else { return }
+        var content = header.defaultContentConfiguration()
         
-        return cell
+        content.text = self.vm.sections[section].value
+   
+        content.textProperties.font = .preferredFont(forTextStyle: .headline).withSize(22)
+        content.textProperties.color = .black
+        
+        header.contentConfiguration = content
+    
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let currentSection = self.vm.sections[indexPath.section]
+        
+        
+        
+      
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
+        
+        
+        switch currentSection {
+            
+        case .nowPlaying:
+            
+            let item = self.vm.nowPlaying[indexPath.item]
+            cell.item = item
+            cell.delegate = self
+            
+            if let imagedata = item.imageCover{
+    
+                cell.vw!.imageView.image = UIImage(data: imagedata)
+            } else {
+                vm.getImages(url: item.poster_path)
+                DispatchQueue.main.async {
+                    self.cv.reloadData()
+                }
+            
+            }
+            
+            return cell
+            
+            
+        case .popular:
+            
+            let item = self.vm.popular[indexPath.item]
+            cell.item = item
+            cell.delegate = self
+            
+            if let imagedata = item.imageCover{
+                cell.vw!.imageView.image = UIImage(data: imagedata)
+            } else {
+                vm.getImagesPopular(url: item.poster_path)
+                DispatchQueue.main.async {
+                    self.cv.reloadData()
+                }
+            
+            }
+            
+            return cell
+        }
+        
+     
+      
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.vm.sections.count
+    }
+    
+    
+    
+    
+}
+
+extension ListViewController: MovieViewModelDelegate{
+    func didFinish() {
+        
+        DispatchQueue.main.async{
+            self.cv.reloadData()
+        }
+     
+    }
+    
+    func didFail(error: Error) {
+        print(error)
     }
     
     
@@ -65,18 +171,44 @@ private extension ListViewController {
     
     private func setup() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.title = "MovieDB"
+        self.navigationItem.title = "Movies"
+        self.navigationItem.searchController = search
+       
+        search.searchBar.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 24)
+       
+               
         self.view.backgroundColor = .white
+        
+        let translux = UINavigationBarAppearance()
+        translux.backgroundColor = .red
+       
         
         self.view.addSubview(cv)
         
         NSLayoutConstraint.activate([
-            cv.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8),
-            cv.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 8),
-            cv.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -8),
+            cv.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0),
+            cv.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            cv.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             cv.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
         
     }
     
 }
+
+extension ListViewController : MovieTableViewCellDelegate {
+    func didNavigate() {
+        let url = URL(string: "https://google.com")!
+        let vc = SFSafariViewController(url: url)
+        
+        self.present(vc, animated:true)
+    }
+    
+    
+}
+
+//extension ListViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+//        return CGSize(width: collectionView.frame.width, height: 50)
+//    }
+//}

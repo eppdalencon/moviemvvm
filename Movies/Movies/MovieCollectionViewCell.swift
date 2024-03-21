@@ -7,19 +7,25 @@
 
 import UIKit
 
-class MovieCollectionViewCell: UICollectionViewCell {
+protocol MovieTableViewCellDelegate: AnyObject {
+    func didNavigate()
+}
+
+class MovieTableViewCell: UITableViewCell {
     
-    private var vw: MovieView?
+   var vw: MovieView?
+    
+    weak var delegate: MovieTableViewCellDelegate?
     
     var item : Movie? {
         didSet{
-            print("setou")
-            vw?.set(title: item?.title ?? "title", description: item?.overview ?? "overview", rating: String(item?.vote_average ?? 0) ?? "78")
+            
+            vw?.set(title: item?.title ?? "title", description: item?.overview ?? "overview", rating: String(format: "%.1f",item?.vote_average ?? 0) )
         }
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
     
@@ -28,21 +34,24 @@ class MovieCollectionViewCell: UICollectionViewCell {
     }
 }
 
-private extension MovieCollectionViewCell {
+private extension MovieTableViewCell {
     func setup(){
         
         guard vw == nil else {return}
         
-        vw = MovieView()
+        vw = MovieView{
+            self.delegate?.didNavigate()
+        }
         
         self.contentView.addSubview((vw!))
         
         NSLayoutConstraint.activate([
             vw!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            vw!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            vw!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            vw!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -8),
+            vw!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             vw!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
         ])
         
     }
 }
+
