@@ -30,7 +30,8 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "Overview"
+        lbl.text = String("Overview")
+        lbl.font = .systemFont(ofSize: 20, weight: .bold)
         return lbl
     }()
     
@@ -63,6 +64,7 @@ class MovieDetailsView: UIView {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.text = "7.1"
+        lbl.backgroundColor = .darkGray
         
         return lbl
     }()
@@ -71,8 +73,11 @@ class MovieDetailsView: UIView {
         let image = UIImageView(image: UIImage(systemName: "star")!)
         image.tintColor = .yellow
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.widthAnchor.constraint(equalToConstant: 1).isActive = true
-        image.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        image.contentMode = .scaleAspectFit
+        image.backgroundColor = .gray
+        image.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+//        image.widthAnchor.constraint(equalToConstant: 3).isActive = true
+//        image.heightAnchor.constraint(equalToConstant: 3).isActive = true
         return image
     }
 
@@ -113,10 +118,11 @@ class MovieDetailsView: UIView {
         let vw = UIStackView()
         vw.translatesAutoresizingMaskIntoConstraints = false
         vw.axis = .horizontal
-        vw.alignment = .fill
-        vw.distribution = .fillEqually
+        vw.alignment = .leading
+        vw.distribution = .fill
         vw.backgroundColor = .purple
         vw.spacing = 8
+        
         return vw
     }()
     
@@ -133,9 +139,32 @@ private extension MovieDetailsView{
         stackViewVerticalInner.addArrangedSubview(title)
         stackViewVerticalInner.addArrangedSubview(genres)
         stackViewVerticalInner.addArrangedSubview(stackViewHorizontalInner)
+        
+        NSLayoutConstraint.activate([
+            title.topAnchor.constraint(equalTo: stackViewVerticalInner.topAnchor),
+            stackViewHorizontalInner.leadingAnchor.constraint(equalTo: stackViewVerticalInner.leadingAnchor),
+            stackViewHorizontalInner.bottomAnchor.constraint(equalTo: stackViewVerticalInner.bottomAnchor),
+            stackViewHorizontalInner.topAnchor.constraint(equalTo: stackViewVerticalInner.topAnchor, constant: 200),
+            stackViewVerticalInner.trailingAnchor.constraint(equalTo: stackViewVerticalInner.trailingAnchor, constant: 200)
+        ])
 
         stackViewHorizontal.addArrangedSubview(imageCover)
+        
+        NSLayoutConstraint.activate([
+            imageCover.leadingAnchor.constraint(equalTo: stackViewHorizontal.leadingAnchor),
+            imageCover.topAnchor.constraint(equalTo: stackViewHorizontal.topAnchor),
+            imageCover.bottomAnchor.constraint(equalTo: stackViewHorizontal.bottomAnchor),
+            imageCover.trailingAnchor.constraint(equalTo: stackViewHorizontal.trailingAnchor, constant: -100),
+        ])
+        
         stackViewHorizontal.addArrangedSubview(stackViewVerticalInner)
+        
+        NSLayoutConstraint.activate([
+            //stackViewVerticalInner.leadingAnchor.constraint(equalTo: stackViewHorizontal.leadingAnchor),
+            stackViewVerticalInner.topAnchor.constraint(equalTo: stackViewHorizontal.topAnchor),
+            stackViewVerticalInner.bottomAnchor.constraint(equalTo: stackViewHorizontal.bottomAnchor),
+            stackViewVerticalInner.trailingAnchor.constraint(equalTo: stackViewHorizontal.trailingAnchor),
+        ])
         
 
         stackViewVertical.addArrangedSubview(stackViewHorizontal)
@@ -151,8 +180,14 @@ private extension MovieDetailsView{
             stackViewVertical.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stackViewHorizontal.trailingAnchor.constraint(equalTo: stackViewVertical.trailingAnchor),
             stackViewHorizontal.leadingAnchor.constraint(equalTo: stackViewVertical.leadingAnchor),
-            overviewLabel.topAnchor.constraint(equalTo: stackViewHorizontal.bottomAnchor)
-            ])
+            overviewLabel.topAnchor.constraint(equalTo: stackViewHorizontal.bottomAnchor),
+            stackViewHorizontalInner.topAnchor.constraint(equalTo: stackViewHorizontalInner.topAnchor, constant:  16),
+            
+//            star.topAnchor.constraint(equalTo: topAnchor),
+//            star.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            star.leadingAnchor.constraint(equalTo: leadingAnchor)
+        
+        ])
     }
     
 }
