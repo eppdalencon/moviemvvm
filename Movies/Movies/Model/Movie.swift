@@ -20,3 +20,20 @@ struct Movie: Decodable {
     var poster_path: String
     var imageCover: Data?
 }
+
+enum Section: Int, CaseIterable {
+    case nowPlaying
+    case popular
+    
+    var value: String {
+        switch self {
+            case .nowPlaying:
+                return "Now Playing"
+            case .popular:
+                return "Popular"
+        }
+    }
+}
+
+
+
