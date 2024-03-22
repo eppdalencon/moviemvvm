@@ -19,7 +19,6 @@ class MovieTableViewCell: UITableViewCell {
     
     var item : Movie? {
         didSet{
-            
             vw?.set(title: item?.title ?? "title", description: item?.overview ?? "overview", rating: String(format: "%.1f",item?.vote_average ?? 0) )
         }
     }

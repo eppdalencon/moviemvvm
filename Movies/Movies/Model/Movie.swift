@@ -27,10 +27,11 @@ enum Section: Int, CaseIterable {
     
     var value: String {
         switch self {
+                case .popular:
+                    return "Popular"
             case .nowPlaying:
                 return "Now Playing"
-            case .popular:
-                return "Popular"
+           
         }
     }
 }

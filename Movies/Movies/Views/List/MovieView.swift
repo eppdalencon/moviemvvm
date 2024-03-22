@@ -11,7 +11,6 @@ import UIKit
 
 class MovieView: UIView {
     
-    
     private lazy var titleLbl: UILabel = {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
@@ -36,9 +35,7 @@ class MovieView: UIView {
      lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "dom2")
-        imageView.contentMode = .scaleAspectFit // ou .scaleAspectFill, dependendo da necessidade
-//        imageView.backgroundColor = UIColor.blue
+        imageView.contentMode = .scaleAspectFit
         imageView.widthAnchor.constraint(equalToConstant: 92).isActive = true
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
@@ -57,11 +54,9 @@ class MovieView: UIView {
         let star = UIImageView()
         star.translatesAutoresizingMaskIntoConstraints = false
         star.image = UIImage(systemName: "star")
-        star.contentMode = .scaleAspectFit // ou .scaleAspectFill, dependendo da necessidade
+        star.contentMode = .scaleAspectFit
         star.tintColor = UIColor.secondaryLabel
-    
         star.widthAnchor.constraint(equalToConstant: 20).isActive = true
-//        star.layer.masksToBounds = true
         return star
     }()
     
@@ -69,15 +64,11 @@ class MovieView: UIView {
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.text = "7.7"
-        
-     
         lbl.font = .systemFont(ofSize: 14, weight: .medium)
         lbl.heightAnchor.constraint(equalToConstant: 16).isActive = true
         lbl.textColor = UIColor.secondaryLabel
         return lbl
     }()
-    
-    
     
     private lazy var infoStackVw: UIStackView = {
         let vw = UIStackView()
@@ -103,8 +94,6 @@ class MovieView: UIView {
         setup()
     }
     
-    
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -116,14 +105,11 @@ class MovieView: UIView {
        
     }
     
-    
 }
-
 
 private extension MovieView {
     private func setup() {
         self.layer.cornerRadius = 10
-//        self.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(movieStackVw)
         
@@ -153,8 +139,7 @@ private extension MovieView {
         infoStackVw.addArrangedSubview(titleLbl)
         infoStackVw.addArrangedSubview(descriptionLbl)
         infoStackVw.addArrangedSubview(rateStack)
-        
-//        descriptionLbl.setContentCompressionResistancePriority(.required, for: .vertical) // Ensure label expands vertically
+
         
         NSLayoutConstraint.activate([
             infoStackVw.topAnchor.constraint(equalTo: movieStackVw.topAnchor, constant: 8),
@@ -181,8 +166,6 @@ private extension MovieView {
     }
     
     @objc private func movieViewTapped() {
-           // Call the action provided to MovieView initializer
-       
            action()
        }
     
