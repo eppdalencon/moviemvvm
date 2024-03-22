@@ -9,6 +9,19 @@ import Foundation
 import UIKit
 
 class MovieDetailsViewController: UIViewController {
+    
+    var movie: Movie
+    
+    init(movie: Movie){
+        self.movie = movie
+        super.init(nibName:nil, bundle:nil)
+       
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         setup()
     }
@@ -18,11 +31,14 @@ private extension MovieDetailsViewController {
     
     private func setup() {
         
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationItem.title = "Details"
+        
          let scrollView = UIScrollView()
-         let movieDetail = MovieDetailsView()
+        let movieDetail = MovieDetailsView(movie: self.movie)
          scrollView.translatesAutoresizingMaskIntoConstraints = false
          scrollView.isScrollEnabled = true
-         scrollView.backgroundColor = .cyan
+         scrollView.backgroundColor = .white
          movieDetail.translatesAutoresizingMaskIntoConstraints = false
         
          self.view.addSubview(scrollView)
