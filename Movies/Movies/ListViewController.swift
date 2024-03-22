@@ -23,18 +23,20 @@ private extension ListViewController {
     private func setup() {
         
         let scrollView = UIScrollView()
-        let vw = MovieDetailsView()
+        let movieDetail = MovieDetailsView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        vw.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.isScrollEnabled = true
+        scrollView.backgroundColor = .cyan
+        movieDetail.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(scrollView)
-        scrollView.addSubview(vw)
+        scrollView.addSubview(movieDetail)
         
         NSLayoutConstraint.activate([
-            vw.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
-            vw.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
-            vw.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            vw.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            movieDetail.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+            movieDetail.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
+            movieDetail.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            movieDetail.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             
         ])
         

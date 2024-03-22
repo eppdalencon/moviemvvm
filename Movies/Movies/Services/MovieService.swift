@@ -3,7 +3,7 @@
 import Foundation
 
 
-class MovieService{
+class MovieService {
     
     static var urlStringPopular = "https://api.themoviedb.org/3/movie/popular?api_key=f179d970a1a37d56685f7e23c024008e&language=en-US&page="
     static var urlStringNowPlaying = "https://api.themoviedb.org/3/movie/now_playing?api_key=f179d970a1a37d56685f7e23c024008e&language=en-US&page="

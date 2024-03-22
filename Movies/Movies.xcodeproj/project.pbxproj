@@ -15,6 +15,7 @@
 		303BDDAA2BAA0B2000B68ABD /* MovieService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303BDDA92BAA0B2000B68ABD /* MovieService.swift */; };
 		303BDDAD2BAA0B4E00B68ABD /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303BDDAC2BAA0B4E00B68ABD /* Movie.swift */; };
 		CE201BC52BAA21700021296D /* MovieDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE201BC42BAA21700021296D /* MovieDetailsView.swift */; };
+		CE815F6B2BACBDF500EA8D51 /* MovieDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE815F6A2BACBDF500EA8D51 /* MovieDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		303BDDA92BAA0B2000B68ABD /* MovieService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieService.swift; sourceTree = "<group>"; };
 		303BDDAC2BAA0B4E00B68ABD /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		CE201BC42BAA21700021296D /* MovieDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsView.swift; sourceTree = "<group>"; };
+		CE815F6A2BACBDF500EA8D51 /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 			children = (
 				303BDDA92BAA0B2000B68ABD /* MovieService.swift */,
 				CE201BC42BAA21700021296D /* MovieDetailsView.swift */,
+				CE815F6A2BACBDF500EA8D51 /* MovieDetailsViewModel.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE815F6B2BACBDF500EA8D51 /* MovieDetailsViewModel.swift in Sources */,
 				CE201BC52BAA21700021296D /* MovieDetailsView.swift in Sources */,
 				303BDD932BAA033100B68ABD /* AppDelegate.swift in Sources */,
 				303BDDA72BAA048A00B68ABD /* ListViewController.swift in Sources */,
