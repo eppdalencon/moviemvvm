@@ -174,6 +174,37 @@ extension ListViewController: MovieViewModelDelegate{
 private extension ListViewController {
     
     private func setup() {
+        
+        // let scrollView = UIScrollView()
+        // let movieDetail = MovieDetailsView()
+        // scrollView.translatesAutoresizingMaskIntoConstraints = false
+        // scrollView.isScrollEnabled = true
+        // scrollView.backgroundColor = .cyan
+        // movieDetail.translatesAutoresizingMaskIntoConstraints = false
+        
+        // self.view.addSubview(scrollView)
+        // scrollView.addSubview(movieDetail)
+        
+        // NSLayoutConstraint.activate([
+        //     movieDetail.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
+        //     movieDetail.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
+        //     movieDetail.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+        //     movieDetail.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            
+        // ])
+        
+        // NSLayoutConstraint.activate([
+        //     scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+        //     scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        //     scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        //     scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+        // ])
+        
+
+
+
+
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Movies"
         self.navigationItem.searchController = search
@@ -204,8 +235,10 @@ extension ListViewController : MovieTableViewCellDelegate {
     func didNavigate() {
         let url = URL(string: "https://google.com")!
         let vc = SFSafariViewController(url: url)
+        //let details = UIViewController
+        let viewDetails = MovieDetailsViewController()
         
-        self.present(vc, animated:true)
+        self.present(viewDetails, animated:true)
     }
     
     
