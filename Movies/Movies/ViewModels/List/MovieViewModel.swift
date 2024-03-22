@@ -16,7 +16,7 @@ class MovieViewModel{
     
     var nowPlaying = [Movie]()
     var popular = [Movie]()
-    var sections: [Section] = Section.allCases
+    var sections: [Section] = [.popular, .nowPlaying]
     
     weak var delegate: MovieViewModelDelegate?
     

@@ -25,7 +25,7 @@ class MovieService {
             // Parse data
             let parsedData = self.decodeByProtocols(data: data, isPopular: true)
             
-            
+            print(parsedData)
             
             completion(parsedData)
             

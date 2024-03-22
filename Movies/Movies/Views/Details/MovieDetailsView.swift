@@ -75,7 +75,7 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "Adventure, Suspense"
+        lbl.text = Genres.getGenreNames(ids: vm.movie?.genre_ids ?? [])  
         lbl.numberOfLines = 2
         lbl.textColor = UIColor.secondaryLabel
         return lbl

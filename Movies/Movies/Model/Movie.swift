@@ -18,6 +18,7 @@ struct Movie: Decodable {
     var overview: String
     var vote_average: Double
     var poster_path: String
+    var genre_ids:[Int]
     var imageCover: Data?
 }
 
