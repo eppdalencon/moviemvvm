@@ -232,13 +232,14 @@ private extension ListViewController {
 }
 
 extension ListViewController : MovieTableViewCellDelegate {
-    func didNavigate() {
+    func didNavigate(movie: Movie) {
         let url = URL(string: "https://google.com")!
         let vc = SFSafariViewController(url: url)
         //let details = UIViewController
-        let viewDetails = MovieDetailsViewController()
+        let viewDetails = MovieDetailsViewController(movie: movie)
         
-        self.present(viewDetails, animated:true)
+        self.navigationController?.pushViewController(viewDetails, animated: true)
+        
     }
     
     

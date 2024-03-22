@@ -8,9 +8,10 @@ import UIKit
 
 class MovieDetailsView: UIView {
     
-    private var vm = MovieDetailsViewModel()
+    private var vm: MovieDetailsViewModel
     
-    init(){
+    init(movie: Movie){
+        self.vm = MovieDetailsViewModel(movie: movie)
         super.init(frame: .zero)
         setup()
     }
@@ -23,11 +24,12 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "BLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLABLA"
+        lbl.text = vm.movie?.overview
         //lbl.backgroundColor = .orange
-        lbl.lineBreakStrategy = .pushOut
+        //lbl.lineBreakStrategy = .pushOut
+        lbl.textColor = UIColor.secondaryLabel
         lbl.numberOfLines = 0
-        lbl.setContentHuggingPriority(.defaultLow, for: .vertical)
+        lbl.setContentHuggingPriority(.defaultHigh, for: .vertical)
         return lbl
     }()
     
@@ -37,37 +39,34 @@ class MovieDetailsView: UIView {
         lbl.translatesAutoresizingMaskIntoConstraints = false
         lbl.text = String("Overview")
         lbl.font = .systemFont(ofSize: 20, weight: .bold)
+       
         //lbl.backgroundColor = .brown
         
         return lbl
     }()
     
-    private lazy var overviewAux: UILabel = {
-        let lbl = UILabel()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = String("aux")
-        lbl.textColor = .white
-        lbl.font = .systemFont(ofSize: 1)
-        //lbl.backgroundColor = .white
-        lbl.setContentHuggingPriority(.defaultHigh, for: .vertical)
+    private lazy var overviewAux: UIView = {
+        let lbl = UIView()
+        lbl.setContentHuggingPriority(.defaultLow, for: .vertical)
         return lbl
     }()
     
     
-    private lazy var imageCover: UILabel = { //vira um image
+    private lazy var imageCover: UIImageView = {
         
-        let lbl = UILabel()
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "imagem"
-        //lbl.backgroundColor = .red
-        return lbl
+        let image = UIImageView(image: UIImage(data: (vm.movie?.imageCover)!))
+        image.translatesAutoresizingMaskIntoConstraints = false
+        //image.contentMode = .scaleAspectFit
+        image.layer.masksToBounds = true
+        image.layer.cornerRadius = 10
+        return image
     }()
     
     private lazy var title: UILabel = {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "Rei leao"
+        lbl.text = vm.movie?.title
         lbl.font = .systemFont(ofSize: 22, weight: .bold)
         return lbl
     }()
@@ -76,8 +75,9 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "algo,outra coisa coisa coisacoisacoisacoisacoisacoisacoisa"
+        lbl.text = "Adventure, Suspense"
         lbl.numberOfLines = 2
+        lbl.textColor = UIColor.secondaryLabel
         return lbl
     }()
     
@@ -85,23 +85,24 @@ class MovieDetailsView: UIView {
         
         let lbl = UILabel()
         lbl.translatesAutoresizingMaskIntoConstraints = false
-        lbl.text = "7.1"
+        lbl.text = String(vm.movie!.vote_average)
+        lbl.textColor = UIColor.secondaryLabel
         //lbl.backgroundColor = .white
         
         return lbl
     }()
     
-    private var star: UIImageView{
+    private lazy var star: UIImageView = {
         let image = UIImageView(image: UIImage(systemName: "star")!)
         image.tintColor = .gray
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
-        //image.backgroundColor = .white
+        image.tintColor = .secondaryLabel
         image.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 //        image.widthAnchor.constraint(equalToConstant: 3).isActive = true
 //        image.heightAnchor.constraint(equalToConstant: 3).isActive = true
         return image
-    }
+    }()
 
     private lazy var stackViewVertical: UIStackView = {
         let vw = UIStackView()
@@ -110,7 +111,7 @@ class MovieDetailsView: UIView {
         //vw.backgroundColor = .black
         vw.spacing = 8
         vw.alignment = .fill
-        vw.distribution = .fillProportionally
+        vw.distribution = .fill
         return vw
     }()
     
@@ -143,7 +144,7 @@ class MovieDetailsView: UIView {
         vw.alignment = .leading
         vw.distribution = .fill
         //vw.backgroundColor = .purple
-        vw.spacing = 8
+        vw.spacing = 4
         
         return vw
     }()
@@ -161,9 +162,11 @@ private extension MovieDetailsView{
         stackViewVerticalInner.addArrangedSubview(stackViewHorizontalInner)
         
         NSLayoutConstraint.activate([
+            star.leadingAnchor.constraint(equalTo: stackViewVerticalInner.leadingAnchor, constant: 16),
+            title.leadingAnchor.constraint(equalTo: stackViewVerticalInner.leadingAnchor, constant: 16),
             stackViewHorizontalInner.leadingAnchor.constraint(equalTo: stackViewVerticalInner.leadingAnchor),
             stackViewHorizontalInner.bottomAnchor.constraint(equalTo: stackViewVerticalInner.bottomAnchor),
-            stackViewHorizontalInner.topAnchor.constraint(equalTo: genres.bottomAnchor),
+            stackViewHorizontalInner.topAnchor.constraint(equalTo: genres.bottomAnchor, constant: 8),
         ])
 
         stackViewHorizontal.addArrangedSubview(imageCover)
@@ -191,10 +194,26 @@ private extension MovieDetailsView{
         stackViewVertical.addArrangedSubview(overview)
         stackViewVertical.addArrangedSubview(overviewAux)
         
+        NSLayoutConstraint.activate([
+            overviewLabel.leadingAnchor.constraint(equalTo: stackViewHorizontal.leadingAnchor),
+            overviewLabel.trailingAnchor.constraint(equalTo: stackViewHorizontal.trailingAnchor),
+            overviewLabel.topAnchor.constraint(equalTo: stackViewHorizontal.bottomAnchor, constant: 16),
+            overviewLabel.heightAnchor.constraint(equalToConstant: 50),
+            
+        ])
+        
+        NSLayoutConstraint.activate([
+            overview.leadingAnchor.constraint(equalTo: stackViewHorizontal.leadingAnchor),
+            overview.trailingAnchor.constraint(equalTo: stackViewHorizontal.trailingAnchor),
+            overview.topAnchor.constraint(equalTo: overviewLabel.bottomAnchor),
+            overview.bottomAnchor.constraint(equalTo: overviewAux.topAnchor),
+            
+        ])
+        
         self.addSubview(stackViewVertical)
         
         NSLayoutConstraint.activate([
-            stackViewVertical.topAnchor.constraint(equalTo: self.topAnchor, constant: 100),
+            stackViewVertical.topAnchor.constraint(equalTo: self.topAnchor, constant: 110),
             stackViewVertical.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             stackViewVertical.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             stackViewVertical.leadingAnchor.constraint(equalTo: self.leadingAnchor),

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MovieTableViewCellDelegate: AnyObject {
-    func didNavigate()
+    func didNavigate(movie: Movie)
 }
 
 class MovieTableViewCell: UITableViewCell {
@@ -40,7 +40,7 @@ private extension MovieTableViewCell {
         guard vw == nil else {return}
         
         vw = MovieView{
-            self.delegate?.didNavigate()
+            self.delegate?.didNavigate(movie:self.item!)
         }
         
         self.contentView.addSubview((vw!))
